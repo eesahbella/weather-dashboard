@@ -21,7 +21,7 @@ return queryWeatherURLWithParam;
 }
 
 // construct the FORECAST query URL for making an API request
-function constructqueryForecastURL (){
+function constructQueryForecastURL (){
 
     // Get user input from the input field
     var chosenCity = $("#search-input").val();
@@ -34,7 +34,7 @@ function constructqueryForecastURL (){
     
     // Construct the URL with user input and API key
     
-    var queryForecastURLWithParam = queryForecastURL + "?q=" + chosenCity + "&limit=1&appid=" + APIKey;
+    var queryForecastURLWithParam = queryForecastURL + "?q=" + chosenCity + "&limit=5&appid=" + APIKey;
     console.log(queryForecastURLWithParam);
     
     return queryForecastURLWithParam;
@@ -46,9 +46,11 @@ function constructqueryForecastURL (){
 $("#search-button").on("click", function(event) {
     event.preventDefault();
 
+    //FOR CURRENT WEATHER
+
     var queryURLWeather = constructQueryWeatherURL();
 
-    fetch(queryURL)
+    fetch(queryURLWeather)
     .then(function (response) {
         return response.json();
     })
@@ -59,20 +61,67 @@ $("#search-button").on("click", function(event) {
 
    // Extracting relevant information from the weatherData
     var cityName = weatherData.name;
-    var temperature = weatherData.main.temp;
+    var temperature = weatherData.main.temp - 273.15;
     var weatherDescription = weatherData.weather[0].description;
+    var iconCode = weatherData.weather[0].icon;
     var windSpeed = weatherData.wind.speed;
     var humidity = weatherData.main.humidity;
 
+   // Convert timestamp (dt) to a readable date
+   var date = new Date(weatherData.dt * 1000); // Convert to milliseconds
+
+    // Construct the URL for the weather icon
+    var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+
     // Updating HTML
-    var cardContent =
+    var cardWeatherContent =
     `<h2>${cityName}</h2>
-    <p>Temperature: ${temperature} K</p>
+    <p>Date: ${date.toLocaleDateString()}</p>
+    <p>Temperature: ${temperature.toFixed(0)}°C</p>
     <p>Weather: ${weatherDescription}</p>
+    <img src="${iconUrl}" alt="Weather Icon" style="width: 50px; height: 50px;">
     <p>Wind Speed: ${windSpeed} m/s</p>
     <p>Humidity: ${humidity}%</p>`;
 
-    $('#chosen-city-weather').html(cardContent);
+    $('#chosen-city-weather').html(cardWeatherContent);
 
-    });    
+    });  
+    
+
+    //FOR 5 DAY FORECAST
+
+    var queryURLForecast = constructQueryForecastURL();
+
+    fetch(queryURLForecast)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(forecastData) {
+
+    // Log the resulting object
+    console.log(forecastData);
+
+    // Iterate over the forecast data for each day
+    for (var i = 0; i < forecastData.list.length; i+=8) {
+        var forecast = forecastData.list[i];
+
+        // Extract relevant information from the forecast data
+        var date = new Date(forecast.dt * 1000);
+        var weatherDescription = forecast.weather[0].description;
+        var iconCode = forecast.weather[0].icon;
+        var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+        var temperature = forecast.main.temp - 273.15;
+        var humidity = forecast.main.humidity;
+
+        // Construct the HTML content for each forecast day
+        var cardForecastContent = `<p>Date: ${date.toLocaleDateString()}</p>
+        <p>Weather: ${weatherDescription}</p>
+        <img src="${iconUrl}" alt="Weather Icon" style="width: 50px; height: 50px;">
+        <p>Temperature: ${temperature.toFixed(0)}°C</p>
+        <p>Humidity: ${humidity}%</p>`;
+
+        // Insert the forecast content into the corresponding HTML element
+        $('#forecast-' + ((i / 8) + 1)).html(cardForecastContent);
+    }
+    });
 });
