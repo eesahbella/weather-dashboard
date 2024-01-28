@@ -138,6 +138,7 @@ $("#search-button").on("click", function(event) {
     // Create and append buttons for each city in the history
     for (var j = 0; j < cityHistory.length; j++) {
         var cityButton = $("<button>");
+        cityButton.addClass("mb-3 btn btn-success");
         cityButton.text(cityHistory[j]);
         $("#history").append(cityButton);
     }

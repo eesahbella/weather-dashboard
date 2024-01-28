@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <header class="container-fluid text-center text-white bg-dark p-2 weather-header">
+  <header class="container-fluid text-center text-white bg-success p-2 weather-header">
     <h1>Weather Dashboard</h1>
   </header>
 
@@ -26,10 +26,10 @@
         <form id="search-form" class="form">
           <div class="form-inline form-group">
             <div class="input-group">
-              <input class="form-input weather-search" type="text" id="search-input" placeholder="London"
+              <input class="form-input weather-search mb-3 col-12 col-sm-10 col-lg-12" type="text" id="search-input" placeholder="London"
                 aria-labelledby="form-heading" aria-controls="today forecast" />
-              <div class="input-group-append">
-                <button type="submit" class="btn search-button" id="search-button" aria-label="submit search">
+              <div class="input-group-append mb-3 col-12 col-sm-10 col-lg-12">
+                <button type="submit" class="btn search-button btn-secondary mb-3 col-12 col-sm-10 col-lg-12" id="search-button" aria-label="submit search">
                   Search
                 </button>
                 <hr class="hr weather-hr" />
@@ -37,15 +37,9 @@
             </div>
           </div>
         </form>
-        <!--This div is for the 6 button options for different cities previously searched // search history -->
+        <!--This div is for the button options for different cities previously searched // search history -->
         <div class="list-group" id="history">
           <div class="d-grid gap-2 col-6 mt-3">
-            <!-- <button class="btn btn-secondary" type="button">Button</button>
-            <button class="btn btn-secondary" type="button">Button</button>
-            <button class="btn btn-secondary" type="button">Button</button>
-            <button class="btn btn-secondary" type="button">Button</button>
-            <button class="btn btn-secondary" type="button">Button</button>
-            <button class="btn btn-secondary" type="button">Button</button> -->
           </div>
         </div>
       </aside>
