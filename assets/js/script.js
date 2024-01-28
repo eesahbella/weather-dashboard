@@ -41,10 +41,17 @@ function constructQueryForecastURL (){
     }
 
 
+var cityHistory = [];
 
 //click event
 $("#search-button").on("click", function(event) {
     event.preventDefault();
+
+    // Get user input from the input field
+    var chosenCity = $("#search-input").val();
+    // Add the chosen city to the history
+    cityHistory.push(chosenCity);
+
 
     //FOR CURRENT WEATHER
 
@@ -122,6 +129,17 @@ $("#search-button").on("click", function(event) {
 
         // Insert the forecast content into the corresponding HTML element
         $('#forecast-' + ((i / 8) + 1)).html(cardForecastContent);
+
+    }
+
+    // Deleting the buttons prior to adding new ones
+    $("#history").empty();
+
+    // Create and append buttons for each city in the history
+    for (var j = 0; j < cityHistory.length; j++) {
+        var cityButton = $("<button>");
+        cityButton.text(cityHistory[j]);
+        $("#history").append(cityButton);
     }
     });
 });
