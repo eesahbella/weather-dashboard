@@ -134,8 +134,6 @@ $("#search-button").on("click", function(event) {
         // Insert the forecast content into the corresponding HTML element
         $('#forecast-' + ((i / 8) + 1)).html(cardForecastContent);
 
-        //Local Storage !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
     } 
 //-------------END OF SEARCH BUTTON CLICK EVENT------------------------------------------------------------------------------------------------------------------------------
@@ -263,3 +261,10 @@ function displayCityWeatherInfo(selectedCity) {
     });
 }
 // END OF FUNCTION for displaying the city weather info -----------------------------------------------------------------------------------------------------------------------
+
+// Saving into local storage--------------------------------------------------------------------------------------------------------------------------------------------------
+$("#search-button").on("click", function(){
+
+
+
+});
